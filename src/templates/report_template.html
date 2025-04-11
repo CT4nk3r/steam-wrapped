@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Steam Wrapped Report</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { width: 80%; border-collapse: collapse; margin: 20px auto; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        img { display: block; margin: 20px auto; max-width: 100%; }
+        h2 { margin-top: 50px; }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Steam Wrapped Report</h1>
+    <p>Total Games: {{total_games}}</p>
+    <p>Total Playtime: {{total_playtime_hours}} hours</p>
+    <p>Most Played Game: {{most_played_game}} ({{most_played_time}} hours)</p>
+    <h2>Top 10 Games by Playtime</h2>
+    <div id="top_games_chart"></div>
+    <h2>Playtime Distribution</h2>
+    <div id="playtime_distribution"></div>
+    <h2>All Games Data</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>AppID</th>
+            <th>Playtime (Hours)</th>
+            <th>Last Played</th>
+        </tr>
+        {{table_rows}}
+    </table>
+</body>
+</html>

@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Steam Wrapped Report</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { width: 80%; border-collapse: collapse; margin: 20px auto; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        img { display: block; margin: 20px auto; max-width: 100%; }
+        h2 { margin-top: 50px; }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Steam Wrapped Report</h1>
+    <p>Total Games: 247</p>
+    <p>Total Playtime: 4707.82 hours</p>
+    <p>Most Played Game: Dota 2 (1278.03 hours)</p>
+    <h2>Top 10 Games by Playtime</h2>
+    <div id="top_games_chart"></div>
+    <h2>Playtime Distribution</h2>
+    <div id="playtime_distribution"></div>
+    <h2>All Games Data</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>AppID</th>
+            <th>Playtime (Hours)</th>
+            <th>Last Played</th>
+        </tr>
+        
+                <tr>
+                    <td>Dota 2</td>
+                    <td>570</td>
+                    <td>1278.03</td>
+                    <td>2025-01-11</td>
+                </tr>
+            
+                <tr>
+                    <td>Team Fortress 2</td>
+                    <td>440</td>
+                    <td>684.37</td>
+                    <td>2017-08-29</td>
+                </tr>
+            
+                <tr>
+                    <td>Dead by Daylight</td>
+                    <td>381210</td>
+                    <td>382.02</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike 2</td>
+                    <td>730</td>
+                    <td>373.42</td>
+                    <td>2025-04-10</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike</td>
+                    <td>10</td>
+                    <td>203.22</td>
+                    <td>2025-04-06</td>
+                </tr>
+            
+                <tr>
+                    <td>The Forest</td>
+                    <td>242760</td>
+                    <td>92.47</td>
+                    <td>2025-01-15</td>
+                </tr>
+            
+                <tr>
+                    <td>Tom Clancy's Rainbow Six Siege</td>
+                    <td>359550</td>
+                    <td>92.08</td>
+                    <td>2024-07-14</td>
+                </tr>
+            
+                <tr>
+                    <td>Lethal Company</td>
+                    <td>1966720</td>
+                    <td>87.57</td>
+                    <td>2025-04-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Terraria</td>
+                    <td>105600</td>
+                    <td>80.28</td>
+                    <td>2024-11-16</td>
+                </tr>
+            
+                <tr>
+                    <td>Don't Starve Together</td>
+                    <td>322330</td>
+                    <td>75.72</td>
+                    <td>2024-12-14</td>
+                </tr>
+            
+                <tr>
+                    <td>Warframe</td>
+                    <td>230410</td>
+                    <td>75.47</td>
+                    <td>2023-08-06</td>
+                </tr>
+            
+                <tr>
+                    <td>FINAL FANTASY VII REMAKE INTERGRADE</td>
+                    <td>1462040</td>
+                    <td>74.65</td>
+                    <td>2025-02-05</td>
+                </tr>
+            
+                <tr>
+                    <td>PUBG: BATTLEGROUNDS</td>
+                    <td>578080</td>
+                    <td>58.48</td>
+                    <td>2022-03-19</td>
+                </tr>
+            
+                <tr>
+                    <td>FINAL FANTASY VII REBIRTH</td>
+                    <td>2909400</td>
+                    <td>54.42</td>
+                    <td>2025-02-23</td>
+                </tr>
+            
+                <tr>
+                    <td>Graveyard Keeper</td>
+                    <td>599140</td>
+                    <td>53.68</td>
+                    <td>2024-12-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Balatro</td>
+                    <td>2379780</td>
+                    <td>53.32</td>
+                    <td>2025-03-30</td>
+                </tr>
+            
+                <tr>
+                    <td>FINAL FANTASY XV WINDOWS EDITION</td>
+                    <td>637650</td>
+                    <td>52.17</td>
+                    <td>2024-10-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Phasmophobia</td>
+                    <td>739630</td>
+                    <td>51.82</td>
+                    <td>2025-01-15</td>
+                </tr>
+            
+                <tr>
+                    <td>Far Cry® 3</td>
+                    <td>220240</td>
+                    <td>37.95</td>
+                    <td>2020-05-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Vampire Survivors</td>
+                    <td>1794680</td>
+                    <td>37.42</td>
+                    <td>2025-01-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Don't Starve</td>
+                    <td>219740</td>
+                    <td>32.52</td>
+                    <td>2025-02-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Portal 2</td>
+                    <td>620</td>
+                    <td>31.68</td>
+                    <td>2025-02-12</td>
+                </tr>
+            
+                <tr>
+                    <td>Grand Theft Auto V Legacy</td>
+                    <td>271590</td>
+                    <td>29.97</td>
+                    <td>2018-07-11</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life</td>
+                    <td>70</td>
+                    <td>26.53</td>
+                    <td>2024-12-22</td>
+                </tr>
+            
+                <tr>
+                    <td>DOOM Eternal</td>
+                    <td>782330</td>
+                    <td>24.83</td>
+                    <td>2025-01-24</td>
+                </tr>
+            
+                <tr>
+                    <td>The Binding of Isaac</td>
+                    <td>113200</td>
+                    <td>24.62</td>
+                    <td>2023-12-27</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life 2</td>
+                    <td>220</td>
+                    <td>24.15</td>
+                    <td>2025-01-15</td>
+                </tr>
+            
+                <tr>
+                    <td>Borderlands 2</td>
+                    <td>49520</td>
+                    <td>23.87</td>
+                    <td>2024-11-18</td>
+                </tr>
+            
+                <tr>
+                    <td>STAR WARS Jedi: Fallen Order™ </td>
+                    <td>1172380</td>
+                    <td>23.08</td>
+                    <td>2024-07-22</td>
+                </tr>
+            
+                <tr>
+                    <td>Final Fantasy IV (3D Remake)</td>
+                    <td>312750</td>
+                    <td>22.43</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>Cult of the Lamb</td>
+                    <td>1313140</td>
+                    <td>19.62</td>
+                    <td>2025-02-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 4</td>
+                    <td>2050650</td>
+                    <td>17.97</td>
+                    <td>2025-01-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil Village</td>
+                    <td>1196590</td>
+                    <td>17.15</td>
+                    <td>2025-02-23</td>
+                </tr>
+            
+                <tr>
+                    <td>Mark of the Ninja</td>
+                    <td>214560</td>
+                    <td>16.57</td>
+                    <td>2018-12-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Dying Light</td>
+                    <td>239140</td>
+                    <td>15.68</td>
+                    <td>2024-11-10</td>
+                </tr>
+            
+                <tr>
+                    <td>Hollow Knight</td>
+                    <td>367520</td>
+                    <td>14.38</td>
+                    <td>2025-01-30</td>
+                </tr>
+            
+                <tr>
+                    <td>DOOM + DOOM II</td>
+                    <td>2280</td>
+                    <td>14.02</td>
+                    <td>2024-09-18</td>
+                </tr>
+            
+                <tr>
+                    <td>The Witcher 3: Wild Hunt</td>
+                    <td>292030</td>
+                    <td>13.72</td>
+                    <td>2025-01-30</td>
+                </tr>
+            
+                <tr>
+                    <td>Fallout Shelter</td>
+                    <td>588430</td>
+                    <td>13.50</td>
+                    <td>2025-01-16</td>
+                </tr>
+            
+                <tr>
+                    <td>STAR WARS™: The Old Republic™</td>
+                    <td>1286830</td>
+                    <td>13.47</td>
+                    <td>2024-07-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Slay the Spire</td>
+                    <td>646570</td>
+                    <td>12.63</td>
+                    <td>2025-02-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 2</td>
+                    <td>883710</td>
+                    <td>11.23</td>
+                    <td>2024-07-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Alan Wake</td>
+                    <td>108710</td>
+                    <td>11.10</td>
+                    <td>2024-01-21</td>
+                </tr>
+            
+                <tr>
+                    <td>Stardew Valley</td>
+                    <td>413150</td>
+                    <td>10.48</td>
+                    <td>2025-02-09</td>
+                </tr>
+            
+                <tr>
+                    <td>DOOM</td>
+                    <td>379720</td>
+                    <td>10.22</td>
+                    <td>2024-08-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike: Condition Zero</td>
+                    <td>80</td>
+                    <td>10.15</td>
+                    <td>2013-01-29</td>
+                </tr>
+            
+                <tr>
+                    <td>Blocks That Matter</td>
+                    <td>111800</td>
+                    <td>9.82</td>
+                    <td>2014-12-01</td>
+                </tr>
+            
+                <tr>
+                    <td>Life is Strange™</td>
+                    <td>319630</td>
+                    <td>9.37</td>
+                    <td>2018-10-17</td>
+                </tr>
+            
+                <tr>
+                    <td>PAYDAY 2</td>
+                    <td>218620</td>
+                    <td>9.28</td>
+                    <td>2019-01-07</td>
+                </tr>
+            
+                <tr>
+                    <td>Paladins</td>
+                    <td>444090</td>
+                    <td>8.43</td>
+                    <td>2018-03-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Left 4 Dead 2</td>
+                    <td>550</td>
+                    <td>8.13</td>
+                    <td>2025-01-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 7 Biohazard</td>
+                    <td>418370</td>
+                    <td>8.00</td>
+                    <td>2025-02-05</td>
+                </tr>
+            
+                <tr>
+                    <td>For Honor</td>
+                    <td>304390</td>
+                    <td>7.90</td>
+                    <td>2018-12-24</td>
+                </tr>
+            
+                <tr>
+                    <td>The Binding of Isaac: Rebirth</td>
+                    <td>250900</td>
+                    <td>7.58</td>
+                    <td>2025-03-11</td>
+                </tr>
+            
+                <tr>
+                    <td>MONSTER HUNTER RISE</td>
+                    <td>1446780</td>
+                    <td>7.47</td>
+                    <td>2025-03-11</td>
+                </tr>
+            
+                <tr>
+                    <td>Ultimate Chicken Horse</td>
+                    <td>386940</td>
+                    <td>7.45</td>
+                    <td>2025-01-30</td>
+                </tr>
+            
+                <tr>
+                    <td>Pummel Party</td>
+                    <td>880940</td>
+                    <td>7.25</td>
+                    <td>2025-01-01</td>
+                </tr>
+            
+                <tr>
+                    <td>Rocket League</td>
+                    <td>252950</td>
+                    <td>7.05</td>
+                    <td>2021-05-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 3</td>
+                    <td>952060</td>
+                    <td>6.98</td>
+                    <td>2024-07-10</td>
+                </tr>
+            
+                <tr>
+                    <td>Tomb Raider</td>
+                    <td>203160</td>
+                    <td>6.92</td>
+                    <td>2023-12-04</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Star Wars™: The Skywalker Saga</td>
+                    <td>920210</td>
+                    <td>6.48</td>
+                    <td>2024-12-31</td>
+                </tr>
+            
+                <tr>
+                    <td>Inscryption</td>
+                    <td>1092790</td>
+                    <td>6.30</td>
+                    <td>2025-02-17</td>
+                </tr>
+            
+                <tr>
+                    <td>R.E.P.O.</td>
+                    <td>3241660</td>
+                    <td>6.28</td>
+                    <td>2025-03-22</td>
+                </tr>
+            
+                <tr>
+                    <td>The Elder Scrolls V: Skyrim</td>
+                    <td>72850</td>
+                    <td>5.87</td>
+                    <td>2024-06-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Black Mesa</td>
+                    <td>362890</td>
+                    <td>5.87</td>
+                    <td>2024-12-14</td>
+                </tr>
+            
+                <tr>
+                    <td>FINAL FANTASY VI</td>
+                    <td>1173820</td>
+                    <td>5.83</td>
+                    <td>2025-04-07</td>
+                </tr>
+            
+                <tr>
+                    <td>Dwarfs F2P</td>
+                    <td>213650</td>
+                    <td>5.63</td>
+                    <td>2016-08-20</td>
+                </tr>
+            
+                <tr>
+                    <td>3DMark Demo</td>
+                    <td>231350</td>
+                    <td>5.32</td>
+                    <td>2025-01-24</td>
+                </tr>
+            
+                <tr>
+                    <td>BioShock</td>
+                    <td>7670</td>
+                    <td>5.27</td>
+                    <td>2020-05-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Wallpaper Engine</td>
+                    <td>431960</td>
+                    <td>5.20</td>
+                    <td>2024-08-25</td>
+                </tr>
+            
+                <tr>
+                    <td>Project Zomboid</td>
+                    <td>108600</td>
+                    <td>5.03</td>
+                    <td>2025-03-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Day of Defeat</td>
+                    <td>30</td>
+                    <td>4.97</td>
+                    <td>2013-02-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Hogwarts Legacy</td>
+                    <td>990080</td>
+                    <td>4.82</td>
+                    <td>2025-01-16</td>
+                </tr>
+            
+                <tr>
+                    <td>McPixel</td>
+                    <td>220860</td>
+                    <td>4.82</td>
+                    <td>2014-06-27</td>
+                </tr>
+            
+                <tr>
+                    <td>Among Us</td>
+                    <td>945360</td>
+                    <td>4.78</td>
+                    <td>2025-01-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Middle-earth™: Shadow of Mordor™</td>
+                    <td>241930</td>
+                    <td>4.60</td>
+                    <td>2024-11-09</td>
+                </tr>
+            
+                <tr>
+                    <td>BioShock Remastered</td>
+                    <td>409710</td>
+                    <td>4.48</td>
+                    <td>2024-12-22</td>
+                </tr>
+            
+                <tr>
+                    <td>Deathmatch Classic</td>
+                    <td>40</td>
+                    <td>4.45</td>
+                    <td>2014-10-31</td>
+                </tr>
+            
+                <tr>
+                    <td>Alien: Isolation</td>
+                    <td>214490</td>
+                    <td>4.35</td>
+                    <td>2025-01-17</td>
+                </tr>
+            
+                <tr>
+                    <td>Left 4 Dead</td>
+                    <td>500</td>
+                    <td>4.30</td>
+                    <td>2016-03-03</td>
+                </tr>
+            
+                <tr>
+                    <td>Outlast</td>
+                    <td>238320</td>
+                    <td>4.27</td>
+                    <td>2018-05-30</td>
+                </tr>
+            
+                <tr>
+                    <td>Little Nightmares</td>
+                    <td>424840</td>
+                    <td>4.18</td>
+                    <td>2025-02-16</td>
+                </tr>
+            
+                <tr>
+                    <td>Overcooked! 2</td>
+                    <td>728880</td>
+                    <td>4.15</td>
+                    <td>2025-01-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Kingdom Come: Deliverance</td>
+                    <td>379430</td>
+                    <td>4.13</td>
+                    <td>2025-02-14</td>
+                </tr>
+            
+                <tr>
+                    <td>Celeste</td>
+                    <td>504230</td>
+                    <td>3.87</td>
+                    <td>2024-11-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Dead Cells</td>
+                    <td>588650</td>
+                    <td>3.53</td>
+                    <td>2024-12-25</td>
+                </tr>
+            
+                <tr>
+                    <td>Champions Online</td>
+                    <td>9880</td>
+                    <td>3.43</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>PICO PARK</td>
+                    <td>1509960</td>
+                    <td>3.13</td>
+                    <td>2024-12-29</td>
+                </tr>
+            
+                <tr>
+                    <td>LIMBO</td>
+                    <td>48000</td>
+                    <td>3.00</td>
+                    <td>2024-01-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Unrailed!</td>
+                    <td>1016920</td>
+                    <td>2.88</td>
+                    <td>2021-08-22</td>
+                </tr>
+            
+                <tr>
+                    <td>Blasphemous</td>
+                    <td>774361</td>
+                    <td>2.87</td>
+                    <td>2025-02-19</td>
+                </tr>
+            
+                <tr>
+                    <td>Overwatch® 2</td>
+                    <td>2357570</td>
+                    <td>2.85</td>
+                    <td>2024-11-08</td>
+                </tr>
+            
+                <tr>
+                    <td>Ravaged Zombie Apocalypse</td>
+                    <td>96300</td>
+                    <td>2.78</td>
+                    <td>2014-06-27</td>
+                </tr>
+            
+                <tr>
+                    <td>The Basement Collection</td>
+                    <td>214790</td>
+                    <td>2.73</td>
+                    <td>2024-01-21</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike: Condition Zero Deleted Scenes</td>
+                    <td>100</td>
+                    <td>2.63</td>
+                    <td>2012-11-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Portal</td>
+                    <td>400</td>
+                    <td>2.60</td>
+                    <td>2024-02-05</td>
+                </tr>
+            
+                <tr>
+                    <td>Apex Legends</td>
+                    <td>1172470</td>
+                    <td>2.60</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>Fallout 3</td>
+                    <td>22300</td>
+                    <td>2.53</td>
+                    <td>2025-01-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Marvel Rivals</td>
+                    <td>2767030</td>
+                    <td>2.45</td>
+                    <td>2025-01-06</td>
+                </tr>
+            
+                <tr>
+                    <td>Quake Champions</td>
+                    <td>611500</td>
+                    <td>2.23</td>
+                    <td>2018-10-14</td>
+                </tr>
+            
+                <tr>
+                    <td>DLC Quest</td>
+                    <td>230050</td>
+                    <td>2.18</td>
+                    <td>2015-11-22</td>
+                </tr>
+            
+                <tr>
+                    <td>Crypt of the NecroDancer</td>
+                    <td>247080</td>
+                    <td>2.13</td>
+                    <td>2025-02-01</td>
+                </tr>
+            
+                <tr>
+                    <td>Deep Rock Galactic</td>
+                    <td>548430</td>
+                    <td>2.07</td>
+                    <td>2025-02-15</td>
+                </tr>
+            
+                <tr>
+                    <td>Ricochet</td>
+                    <td>60</td>
+                    <td>1.95</td>
+                    <td>2012-08-06</td>
+                </tr>
+            
+                <tr>
+                    <td>Life is Strange: Before the Storm</td>
+                    <td>554620</td>
+                    <td>1.90</td>
+                    <td>2024-01-05</td>
+                </tr>
+            
+                <tr>
+                    <td>Castle Crashers</td>
+                    <td>204360</td>
+                    <td>1.85</td>
+                    <td>2014-06-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Alan Wake's American Nightmare</td>
+                    <td>202750</td>
+                    <td>1.80</td>
+                    <td>2014-12-20</td>
+                </tr>
+            
+                <tr>
+                    <td>Day of Defeat: Source</td>
+                    <td>300</td>
+                    <td>1.77</td>
+                    <td>2014-06-27</td>
+                </tr>
+            
+                <tr>
+                    <td>Deadlock</td>
+                    <td>1422450</td>
+                    <td>1.72</td>
+                    <td>2024-12-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Portal Stories: Mel</td>
+                    <td>317400</td>
+                    <td>1.68</td>
+                    <td>2025-02-06</td>
+                </tr>
+            
+                <tr>
+                    <td>SUPERVIVE</td>
+                    <td>1283700</td>
+                    <td>1.67</td>
+                    <td>2025-02-01</td>
+                </tr>
+            
+                <tr>
+                    <td>Rochard</td>
+                    <td>107800</td>
+                    <td>1.65</td>
+                    <td>2013-08-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life: Source</td>
+                    <td>280</td>
+                    <td>1.63</td>
+                    <td>2012-12-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Portal: Revolution</td>
+                    <td>601360</td>
+                    <td>1.25</td>
+                    <td>2024-12-27</td>
+                </tr>
+            
+                <tr>
+                    <td>STAR WARS™ Knights of the Old Republic™</td>
+                    <td>32370</td>
+                    <td>1.15</td>
+                    <td>2024-07-28</td>
+                </tr>
+            
+                <tr>
+                    <td>TIS-100</td>
+                    <td>370360</td>
+                    <td>1.07</td>
+                    <td>2022-09-24</td>
+                </tr>
+            
+                <tr>
+                    <td>Fallout 4</td>
+                    <td>377160</td>
+                    <td>1.05</td>
+                    <td>2025-01-04</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life: Opposing Force</td>
+                    <td>50</td>
+                    <td>0.95</td>
+                    <td>2013-01-02</td>
+                </tr>
+            
+                <tr>
+                    <td>Home</td>
+                    <td>215670</td>
+                    <td>0.90</td>
+                    <td>2016-07-03</td>
+                </tr>
+            
+                <tr>
+                    <td>Disco Elysium</td>
+                    <td>632470</td>
+                    <td>0.90</td>
+                    <td>2025-02-10</td>
+                </tr>
+            
+                <tr>
+                    <td>Monster Hunter Wilds Benchmark</td>
+                    <td>3424520</td>
+                    <td>0.88</td>
+                    <td>2025-02-07</td>
+                </tr>
+            
+                <tr>
+                    <td>Mister Furry: Hot Muscles</td>
+                    <td>1578220</td>
+                    <td>0.85</td>
+                    <td>2025-01-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life 2: Update</td>
+                    <td>290930</td>
+                    <td>0.85</td>
+                    <td>2017-08-07</td>
+                </tr>
+            
+                <tr>
+                    <td>Nosgoth</td>
+                    <td>200110</td>
+                    <td>0.82</td>
+                    <td>2015-01-25</td>
+                </tr>
+            
+                <tr>
+                    <td>gravilon</td>
+                    <td>355150</td>
+                    <td>0.80</td>
+                    <td>2017-07-10</td>
+                </tr>
+            
+                <tr>
+                    <td>Toki Tori</td>
+                    <td>38700</td>
+                    <td>0.70</td>
+                    <td>2013-03-09</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life: Blue Shift</td>
+                    <td>130</td>
+                    <td>0.70</td>
+                    <td>2013-01-27</td>
+                </tr>
+            
+                <tr>
+                    <td>Brawlhalla</td>
+                    <td>291550</td>
+                    <td>0.67</td>
+                    <td>2016-08-07</td>
+                </tr>
+            
+                <tr>
+                    <td>GRIS</td>
+                    <td>683320</td>
+                    <td>0.65</td>
+                    <td>2025-01-14</td>
+                </tr>
+            
+                <tr>
+                    <td>Hades</td>
+                    <td>1145360</td>
+                    <td>0.60</td>
+                    <td>2024-12-18</td>
+                </tr>
+            
+                <tr>
+                    <td>iBomber Defense Pacific</td>
+                    <td>206690</td>
+                    <td>0.55</td>
+                    <td>2013-07-19</td>
+                </tr>
+            
+                <tr>
+                    <td>Ori and the Blind Forest: Definitive Edition</td>
+                    <td>387290</td>
+                    <td>0.53</td>
+                    <td>2024-10-17</td>
+                </tr>
+            
+                <tr>
+                    <td>Aperture Desk Job</td>
+                    <td>1902490</td>
+                    <td>0.52</td>
+                    <td>2024-10-01</td>
+                </tr>
+            
+                <tr>
+                    <td>Defy Gravity</td>
+                    <td>96100</td>
+                    <td>0.52</td>
+                    <td>2017-07-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Brotato</td>
+                    <td>1942280</td>
+                    <td>0.38</td>
+                    <td>2024-12-21</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike: Source</td>
+                    <td>240</td>
+                    <td>0.37</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>La Tale</td>
+                    <td>264360</td>
+                    <td>0.35</td>
+                    <td>2014-06-27</td>
+                </tr>
+            
+                <tr>
+                    <td>Supreme Commander 2</td>
+                    <td>40100</td>
+                    <td>0.30</td>
+                    <td>2013-05-03</td>
+                </tr>
+            
+                <tr>
+                    <td>SpellForce 2 - Faith in Destiny</td>
+                    <td>65530</td>
+                    <td>0.27</td>
+                    <td>2013-10-20</td>
+                </tr>
+            
+                <tr>
+                    <td>Milk inside a bag of milk inside a bag of milk</td>
+                    <td>1392820</td>
+                    <td>0.27</td>
+                    <td>2025-03-23</td>
+                </tr>
+            
+                <tr>
+                    <td>Counter-Strike Nexon</td>
+                    <td>273110</td>
+                    <td>0.27</td>
+                    <td>2015-02-14</td>
+                </tr>
+            
+                <tr>
+                    <td>BioShock Infinite</td>
+                    <td>8870</td>
+                    <td>0.23</td>
+                    <td>2020-02-06</td>
+                </tr>
+            
+                <tr>
+                    <td>Unturned</td>
+                    <td>304930</td>
+                    <td>0.22</td>
+                    <td>2016-06-25</td>
+                </tr>
+            
+                <tr>
+                    <td>Undertale</td>
+                    <td>391540</td>
+                    <td>0.22</td>
+                    <td>2024-12-22</td>
+                </tr>
+            
+                <tr>
+                    <td>SEX with HITLER</td>
+                    <td>1849000</td>
+                    <td>0.17</td>
+                    <td>2025-01-18</td>
+                </tr>
+            
+                <tr>
+                    <td>Team Fortress Classic</td>
+                    <td>20</td>
+                    <td>0.15</td>
+                    <td>2013-01-18</td>
+                </tr>
+            
+                <tr>
+                    <td>VRChat</td>
+                    <td>438100</td>
+                    <td>0.15</td>
+                    <td>2025-01-15</td>
+                </tr>
+            
+                <tr>
+                    <td>Muse Dash</td>
+                    <td>774171</td>
+                    <td>0.12</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>DOOM II</td>
+                    <td>2300</td>
+                    <td>0.07</td>
+                    <td>2017-07-03</td>
+                </tr>
+            
+                <tr>
+                    <td>NARAKA: BLADEPOINT</td>
+                    <td>1203220</td>
+                    <td>0.05</td>
+                    <td>2024-12-28</td>
+                </tr>
+            
+                <tr>
+                    <td>Worms</td>
+                    <td>70640</td>
+                    <td>0.03</td>
+                    <td>2016-12-29</td>
+                </tr>
+            
+                <tr>
+                    <td>Skyrim Script Extender (SKSE)</td>
+                    <td>365720</td>
+                    <td>0.02</td>
+                    <td>2024-06-28</td>
+                </tr>
+            
+                <tr>
+                    <td>BioShock 2</td>
+                    <td>8850</td>
+                    <td>0.02</td>
+                    <td>2024-10-02</td>
+                </tr>
+            
+                <tr>
+                    <td>Yu-Gi-Oh! Duel Links</td>
+                    <td>601510</td>
+                    <td>0.02</td>
+                    <td>2018-03-17</td>
+                </tr>
+            
+                <tr>
+                    <td>Borderlands GOTY</td>
+                    <td>8980</td>
+                    <td>0.02</td>
+                    <td>2012-07-30</td>
+                </tr>
+            
+                <tr>
+                    <td>Ben There, Dan That!</td>
+                    <td>37420</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Just Act Natural</td>
+                    <td>1485080</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Black Desert</td>
+                    <td>582660</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Lost Ark</td>
+                    <td>1599340</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil Re:Verse</td>
+                    <td>1236300</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Quake III Arena</td>
+                    <td>2200</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Amnesia: The Dark Descent</td>
+                    <td>57300</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Goose Goose Duck</td>
+                    <td>1568590</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Middle-earth™: Shadow of War™</td>
+                    <td>356190</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Amnesia: A Machine for Pigs</td>
+                    <td>239200</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Grand Theft Auto V Enhanced</td>
+                    <td>3240220</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>The LEGO® Movie - Videogame</td>
+                    <td>267530</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>RESIDENT EVIL RESISTANCE</td>
+                    <td>952070</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Milk outside a bag of milk outside a bag of milk</td>
+                    <td>1604000</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Jet Set Radio</td>
+                    <td>205950</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Quake III: Team Arena</td>
+                    <td>2350</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Gun Monkeys</td>
+                    <td>239450</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>RPG Maker VX Ace</td>
+                    <td>220700</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>HuniePop</td>
+                    <td>339800</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Prison Architect</td>
+                    <td>233450</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Golden Light</td>
+                    <td>1245430</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Pankapu</td>
+                    <td>418670</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Source Filmmaker</td>
+                    <td>1840</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>The Bureau: XCOM Declassified</td>
+                    <td>65930</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life Deathmatch: Source</td>
+                    <td>360</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Tell Me Why</td>
+                    <td>1180660</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Content Warning</td>
+                    <td>2881650</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Ale & Tale Tavern: First Pints</td>
+                    <td>2870840</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>MiSide Demo</td>
+                    <td>2527520</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Time Gentlemen, Please!</td>
+                    <td>37400</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Half-Life 2: Deathmatch</td>
+                    <td>320</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Dishonored RHCP</td>
+                    <td>217980</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Portal 2 Sixense Perceptual Pack</td>
+                    <td>247120</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 4 Chainsaw Demo</td>
+                    <td>2231770</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Shadow Warrior</td>
+                    <td>233130</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Once Human</td>
+                    <td>2139460</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Warhammer: Vermintide 2</td>
+                    <td>552500</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Escape Memoirs: Mini Stories</td>
+                    <td>2098350</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Viscera Cleanup Detail: Shadow Warrior</td>
+                    <td>255520</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Harry Potter: Years 1-4</td>
+                    <td>21130</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® MARVEL Super Heroes</td>
+                    <td>249130</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Garry's Mod</td>
+                    <td>4000</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>iBomber Defense</td>
+                    <td>104000</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Batman™: The Videogame</td>
+                    <td>21000</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Mirage: Arcane Warfare</td>
+                    <td>368420</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Ori and the Blind Forest</td>
+                    <td>261570</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Path of Exile</td>
+                    <td>238960</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Worlds</td>
+                    <td>332310</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Layers of Fear (2016)</td>
+                    <td>391720</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Fallout: New Vegas PCR</td>
+                    <td>22490</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® MARVEL's Avengers</td>
+                    <td>405310</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® The Lord of the Rings™</td>
+                    <td>214510</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Minion Masters</td>
+                    <td>489520</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Outlast 2</td>
+                    <td>414700</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Nuclear Contingency</td>
+                    <td>540900</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Premium Pool</td>
+                    <td>434110</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Resident Evil 7 Teaser: Beginning Hour</td>
+                    <td>530620</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>BioShock 2 Remastered</td>
+                    <td>409720</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Borderlands 2 RU</td>
+                    <td>217490</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Harry Potter: Years 5-7</td>
+                    <td>204120</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® STAR WARS™: The Force Awakens</td>
+                    <td>438640</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Tom Clancy's Rainbow Six Siege - Test Server</td>
+                    <td>623990</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Batman™ 2: DC Super Heroes</td>
+                    <td>213330</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>SEGA Mega Drive & Genesis Classics</td>
+                    <td>34270</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>The Lab</td>
+                    <td>450390</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Paladins - Public Test</td>
+                    <td>596350</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Final DOOM</td>
+                    <td>2290</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Borderlands GOTY Enhanced</td>
+                    <td>729040</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® The Hobbit™</td>
+                    <td>285160</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® MARVEL Super Heroes 2</td>
+                    <td>647830</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Lara Croft and the Temple of Osiris</td>
+                    <td>289690</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Borderlands 3</td>
+                    <td>397540</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Homefront</td>
+                    <td>55100</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Hell Yeah!</td>
+                    <td>205230</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Batman™ 3: Beyond Gotham</td>
+                    <td>313690</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Metro 2033</td>
+                    <td>43110</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® Jurassic World</td>
+                    <td>352400</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>For Honor - Public Test</td>
+                    <td>654310</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Metro Exodus Enhanced Edition</td>
+                    <td>1449560</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Metro Exodus</td>
+                    <td>412020</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Insurgency</td>
+                    <td>222880</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Swords and Soldiers HD</td>
+                    <td>63500</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>The LEGO® Movie 2 - Videogame</td>
+                    <td>881320</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>ArcaniA: Fall of Setarrif</td>
+                    <td>65610</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® DC Super-Villains</td>
+                    <td>829110</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Master Levels for DOOM II</td>
+                    <td>9160</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>The Awesome Adventures of Captain Spirit</td>
+                    <td>845070</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>LEGO® The Incredibles</td>
+                    <td>818320</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Totally Accurate Battlegrounds</td>
+                    <td>823130</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Company of Heroes 2</td>
+                    <td>231430</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Gothic Playable Teaser</td>
+                    <td>950670</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+                <tr>
+                    <td>Party Club</td>
+                    <td>2796010</td>
+                    <td>0.00</td>
+                    <td>Never</td>
+                </tr>
+            
+    </table>
+</body>
+</html>
