@@ -1,0 +1,56 @@
+{
+  "type": "bar",
+  "data": {
+    "labels": [
+      "Dota 2",
+      "Team Fortress 2",
+      "Dead by Daylight",
+      "Counter-Strike 2",
+      "Counter-Strike",
+      "The Forest",
+      "Tom Clancy's Rainbow Six Siege",
+      "Lethal Company",
+      "Terraria",
+      "Don't Starve Together"
+    ],
+    "datasets": [
+      {
+        "label": "Playtime (Hours)",
+        "data": [
+          1278.03,
+          684.37,
+          382.02,
+          373.42,
+          203.22,
+          92.47,
+          92.08,
+          87.57,
+          80.28,
+          75.72
+        ],
+        "backgroundColor": "#6b8e23",
+        "hoverBackgroundColor": "#8ab92d"
+      }
+    ]
+  },
+  "options": {
+    "responsive": true,
+    "plugins": {
+      "title": {
+        "display": true,
+        "text": "Top 10 Games by Playtime"
+      },
+      "legend": {
+        "display": false
+      }
+    },
+    "scales": {
+      "y": {
+        "title": {
+          "display": true,
+          "text": "Playtime (Hours)"
+        }
+      }
+    }
+  }
+}

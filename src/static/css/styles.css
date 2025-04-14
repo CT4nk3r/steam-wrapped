@@ -1,0 +1,37 @@
+body {
+    background: linear-gradient(135deg, #1a3c34, #4b0082, #000000);
+    min-height: 100vh;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.table-dark {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+h1, h2 {
+    font-family: 'Segoe UI', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+canvas {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

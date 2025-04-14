@@ -1,0 +1,23 @@
+{
+  "name": "steam-wrapped-webapp",
+  "version": "1.0.0",
+  "description": "Steam Wrapped web app",
+  "main": "server.js",
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "export": "next export",
+  "deploy": "gh-pages -d out"
+},
+  "dependencies": {
+    "@tanstack/react-table": "^8.21.2",
+    "@types/flatpickr": "^3.0.2",
+    "chart.js": "^4.4.8",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "flatpickr": "^4.6.13",
+    "react-chartjs-2": "^5.3.0",
+    "react-flatpickr": "^4.0.2"
+  }
+}
