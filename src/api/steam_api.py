@@ -1,47 +1,49 @@
-import requests
 import json
-from dotenv import load_dotenv
-import os
+from dataclasses import dataclass
+from typing import Any
 
-load_dotenv()
+import requests
 
+
+class SteamApiError(RuntimeError):
+    """Raised when Steam returns an unusable API response."""
+
+
+@dataclass
 class WebAPI:
-    """A class to interface with the Steam Web API."""
-    def __init__(self, key=None):
-        self.key = key
-        self.base_url = "https://api.steampowered.com/"
+    """Small Steam Web API client for the endpoints this project needs."""
 
-    def call(self, endpoint, **kwargs):
-        params = {'key': self.key, 'format': 'json'}
-        params.update(kwargs)
-        url = f"{self.base_url}{endpoint.replace('.', '/')}/v0001/"
+    key: str
+    timeout: int = 20
+
+    base_url = "https://api.steampowered.com"
+
+    def call(self, interface: str, method: str, version: str = "v0001", **params: Any) -> dict[str, Any]:
+        url = f"{self.base_url}/{interface}/{method}/{version}/"
+        request_params = {"key": self.key, "format": "json", **params}
+
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=request_params, timeout=self.timeout)
             response.raise_for_status()
             return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error calling Steam API endpoint {endpoint}: {e}")
-            return {}
-        except json.decoder.JSONDecodeError as e:
-            print(f"Error decoding JSON from Steam API response: {e}")
-            print(f"Response text: {response.text}")
-            return {}
+        except requests.exceptions.RequestException as exc:
+            raise SteamApiError(f"Steam API request failed for {interface}.{method}: {exc}") from exc
+        except json.JSONDecodeError as exc:
+            raise SteamApiError("Steam returned a response that was not valid JSON.") from exc
 
-def get_steam_data(api_key, steam_id):
-    """Retrieves Steam data using the Steam Web API."""
-    try:
-        webapi = WebAPI(key=api_key)
-        response = webapi.call(
-            'IPlayerService.GetOwnedGames',
-            steamid=steam_id,
-            include_appinfo=True,
-            include_played_free_games=True,
-            appids_filter=[],
-            include_free_sub=True,
-            language='english',
-            include_extended_appinfo=True
-        )
-        return response.get('response', {}).get('games', [])
-    except Exception as e:
-        print(f"Error fetching data from Steam API: {e}")
-        return []
+
+def get_steam_data(api_key: str, steam_id: str) -> list[dict[str, Any]]:
+    """Return the owned games list for a Steam user."""
+
+    webapi = WebAPI(key=api_key)
+    response = webapi.call(
+        "IPlayerService",
+        "GetOwnedGames",
+        steamid=steam_id,
+        include_appinfo=True,
+        include_played_free_games=True,
+        include_free_sub=True,
+        language="english",
+    )
+
+    return response.get("response", {}).get("games", [])
