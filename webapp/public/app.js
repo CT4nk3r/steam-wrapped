@@ -1,10 +1,18 @@
 const state = {
   games: [],
+  summary: null,
+  reportMeta: {
+    source: "sample",
+    label: "Sample report",
+    persisted: false,
+  },
   filter: "all",
   search: "",
   sort: "playtime",
   minimumHours: 0,
 };
+
+const STORAGE_KEY = "steam-wrapped-current-report-v1";
 
 const elements = {
   snapshotLabel: document.getElementById("snapshotLabel"),
@@ -24,6 +32,8 @@ const elements = {
   profileInput: document.getElementById("profileInput"),
   importButton: document.getElementById("importButton"),
   importStatus: document.getElementById("importStatus"),
+  exportButton: document.getElementById("exportButton"),
+  resetButton: document.getElementById("resetButton"),
   gameCardTemplate: document.getElementById("gameCardTemplate"),
 };
 
@@ -43,6 +53,181 @@ function normalizeGame(game) {
     played: Boolean(game.played ?? game.Played ?? minutes > 0),
     art: appId ? `https://cdn.akamai.steamstatic.com/steam/apps/${appId}/header.jpg` : "",
   };
+}
+
+function toReportGame(game) {
+  return {
+    Name: game.name,
+    AppID: game.appId,
+    "Playtime (minutes)": game.minutes,
+    "Playtime (hours)": game.hours,
+    "Last Played": game.lastPlayed,
+    Played: game.minutes > 0,
+  };
+}
+
+function buildClientSummary(games) {
+  const stats = getStats(games);
+
+  return {
+    total_games: games.length,
+    played_games: stats.played.length,
+    unplayed_games: stats.unplayed,
+    total_hours: Math.round(stats.totalHours * 100) / 100,
+    top_game: stats.topGame ? toReportGame(stats.topGame) : null,
+    recent_year: stats.recentYear,
+    generated_at: new Date().toISOString().replace(/\.\d{3}Z$/, ""),
+  };
+}
+
+function buildChartExport(games) {
+  const topGames = games.filter((game) => game.minutes > 0).slice(0, 10);
+  const buckets = buildBuckets(games);
+
+  return {
+    topGamesChart: {
+      type: "bar",
+      data: {
+        labels: topGames.map((game) => game.name),
+        datasets: [
+          {
+            label: "Hours",
+            data: topGames.map((game) => game.hours),
+            backgroundColor: "#66c0f4",
+            hoverBackgroundColor: "#a4d65e",
+          },
+        ],
+      },
+      options: { indexAxis: "y", responsive: true, plugins: { legend: { display: false } } },
+    },
+    playtimeDistribution: {
+      type: "bar",
+      data: {
+        labels: buckets.map((bucket) => bucket.label),
+        datasets: [
+          {
+            label: "Games",
+            data: buckets.map((bucket) => bucket.count),
+            backgroundColor: "#ffb000",
+            hoverBackgroundColor: "#ffd166",
+          },
+        ],
+      },
+      options: { responsive: true, plugins: { legend: { display: false } } },
+    },
+  };
+}
+
+function buildExportBundle() {
+  const games = state.games.map(toReportGame);
+  const chartData = buildChartExport(state.games);
+
+  return {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    source: state.reportMeta.source,
+    steamId: state.reportMeta.steamId ?? null,
+    importedAt: state.reportMeta.importedAt ?? null,
+    games,
+    summary: state.summary ?? buildClientSummary(state.games),
+    ...chartData,
+  };
+}
+
+function downloadJson(fileName, payload) {
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function readSavedReport() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+
+    const payload = JSON.parse(raw);
+    if (!Array.isArray(payload.games) || !payload.games.length) {
+      return null;
+    }
+
+    return payload;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+}
+
+function saveReport(payload) {
+  const stored = {
+    version: 1,
+    source: payload.source ?? "import",
+    steamId: payload.steamId ?? null,
+    importedAt: payload.importedAt ?? new Date().toISOString(),
+    summary: payload.summary ?? null,
+    games: payload.games ?? [],
+  };
+
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function clearSavedReport() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+function sourceLabel(source) {
+  if (source === "steam-web-api") {
+    return "Steam Web API";
+  }
+
+  if (source === "steam-community-xml") {
+    return "Community XML";
+  }
+
+  if (source === "browser-storage") {
+    return "Saved browser report";
+  }
+
+  return "Sample report";
+}
+
+function setActiveReport(payload, options = {}) {
+  const games = (payload.games ?? []).map(normalizeGame).sort((a, b) => b.minutes - a.minutes || a.name.localeCompare(b.name));
+  const importedAt = payload.importedAt ?? (options.persisted ? new Date().toISOString() : null);
+  const source = options.source ?? payload.source ?? "sample";
+
+  state.games = games;
+  state.summary = payload.summary ?? buildClientSummary(games);
+  state.reportMeta = {
+    source,
+    steamId: payload.steamId ?? null,
+    importedAt,
+    persisted: Boolean(options.persisted),
+    label: options.label ?? (options.persisted && source !== "sample" ? "Saved browser report" : sourceLabel(source)),
+  };
+}
+
+function resetControls() {
+  state.filter = "all";
+  state.search = "";
+  state.sort = "playtime";
+  state.minimumHours = 0;
+  elements.searchInput.value = "";
+  elements.sortSelect.value = "playtime";
+  elements.minimumHours.value = "0";
+  document.querySelectorAll(".segment").forEach((item) => item.classList.toggle("active", item.dataset.filter === "all"));
 }
 
 function number(value, maximumFractionDigits = 0) {
@@ -139,9 +324,10 @@ function renderHero(games) {
   const top = stats.topGame;
   const totalGames = games.length;
 
-  elements.snapshotLabel.textContent = stats.latestDate
+  const activityLabel = stats.latestDate
     ? `Last activity ${formatMonthYear(stats.latestDate)}`
     : `${number(totalGames)} games loaded`;
+  elements.snapshotLabel.textContent = `${state.reportMeta.label} · ${activityLabel}`;
 
   if (!top) {
     elements.heroStory.textContent = "Your library is loaded, but there is no recorded playtime yet.";
@@ -423,6 +609,7 @@ function renderDashboard() {
     throw new Error("No report data found.");
   }
 
+  elements.resetButton.classList.toggle("hidden", !state.reportMeta.persisted);
   renderHero(games);
   renderMetrics(games);
   renderTopGames(games);
@@ -460,18 +647,14 @@ async function importSteamProfile(event) {
       throw new Error(payload.error || `Import failed with ${response.status}.`);
     }
 
-    state.games = (payload.games ?? []).map(normalizeGame).sort((a, b) => b.minutes - a.minutes || a.name.localeCompare(b.name));
-    state.filter = "all";
-    state.search = "";
-    state.sort = "playtime";
-    state.minimumHours = 0;
-    elements.searchInput.value = "";
-    elements.sortSelect.value = "playtime";
-    elements.minimumHours.value = "0";
-    document.querySelectorAll(".segment").forEach((item) => item.classList.toggle("active", item.dataset.filter === "all"));
+    const importedAt = new Date().toISOString();
+    const persisted = saveReport({ ...payload, importedAt });
+    setActiveReport({ ...payload, importedAt }, { persisted, label: sourceLabel(payload.source) });
+    resetControls();
     renderDashboard();
     const profileLabel = payload.steamId ? ` for ${payload.steamId}` : "";
-    setImportStatus(`Imported ${number(state.games.length)} games${profileLabel}.`, "success");
+    const saveLabel = persisted ? " Saved in this browser." : " Loaded for this session.";
+    setImportStatus(`Imported ${number(state.games.length)} games${profileLabel}.${saveLabel}`, "success");
   } catch (error) {
     setImportStatus(error.message || "Could not import this profile.", "error");
   } finally {
@@ -481,6 +664,17 @@ async function importSteamProfile(event) {
 
 function bindControls() {
   elements.importForm.addEventListener("submit", importSteamProfile);
+  elements.exportButton.addEventListener("click", () => {
+    const identifier = state.reportMeta.steamId || state.reportMeta.source || "report";
+    downloadJson(`steam-wrapped-${identifier}.json`, buildExportBundle());
+  });
+  elements.resetButton.addEventListener("click", async () => {
+    clearSavedReport();
+    resetControls();
+    await loadReport({ ignoreSaved: true });
+    renderDashboard();
+    setImportStatus("Sample report restored.", "neutral");
+  });
 
   elements.searchInput.addEventListener("input", (event) => {
     state.search = event.target.value;
@@ -513,19 +707,28 @@ function renderError(error) {
     <section class="error-state">
       <h1>Steam Wrapped</h1>
       <p>${message}</p>
-      <p>Generate data with <code>python src/main.py</code>, then run <code>npm start</code> inside <code>webapp</code>.</p>
+      <p>Generate data with <code>python src/main.py</code>, or run <code>npm start</code> from the project root to use the sample report and profile import.</p>
     </section>
   `;
 }
 
-async function loadReport() {
+async function loadReport(options = {}) {
+  const savedReport = options.ignoreSaved ? null : readSavedReport();
+  if (savedReport) {
+    setActiveReport(savedReport, { persisted: true });
+    const profileLabel = savedReport.steamId ? ` for ${savedReport.steamId}` : "";
+    setImportStatus(`Loaded saved browser report${profileLabel}.`, "success");
+    return;
+  }
+
   const response = await fetch("/api/report");
   if (!response.ok) {
     throw new Error(`Report API returned ${response.status}.`);
   }
 
   const report = await response.json();
-  state.games = (report.games ?? []).map(normalizeGame).sort((a, b) => b.minutes - a.minutes || a.name.localeCompare(b.name));
+  setActiveReport({ ...report, source: report.source ?? "sample" }, { persisted: false });
+  setImportStatus("Ready", "neutral");
 }
 
 bindControls();

@@ -117,11 +117,16 @@ a {
   border-radius: 8px;
   color: var(--muted);
   background: rgba(31, 36, 40, 0.78);
+  cursor: pointer;
 }
 
 .ghost-button:hover {
   color: var(--text);
   border-color: var(--blue);
+}
+
+.hidden {
+  display: none !important;
 }
 
 .primary-button {

@@ -7,6 +7,7 @@ const port = Number(process.env.PORT || 3000);
 const rootDir = path.resolve(__dirname, "..");
 const reportDir = path.join(rootDir, "reports");
 const publicDir = path.join(__dirname, "public");
+const isVercelDeployment = Boolean(process.env.VERCEL);
 
 loadRootEnv();
 
@@ -44,7 +45,7 @@ function readJson(fileName, fallback) {
 }
 
 function writeJson(fileName, payload) {
-  if (process.env.VERCEL) {
+  if (isVercelDeployment) {
     return;
   }
 
@@ -315,11 +316,20 @@ app.get("/api/games", (_req, res) => {
 app.get("/api/report", (_req, res) => {
   const games = readJson("games_data.json", []).map(normalizeGame);
   const summary = readJson("summary.json", null);
-  res.json({ games, summary });
+  res.json({
+    source: "sample",
+    mode: isVercelDeployment ? "deployed" : "local",
+    writableReports: !isVercelDeployment,
+    games,
+    summary,
+  });
 });
 
 app.get("/api/export", (_req, res) => {
   const bundle = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    source: "server-report",
     games: readJson("games_data.json", []),
     summary: readJson("summary.json", null),
     topGamesChart: readJson("top_games_chart.json", null),
@@ -343,6 +353,8 @@ app.post("/api/import", async (req, res) => {
       const steamId = (await resolveSteamIdFromCommunity(profile)) || null;
       return res.json({
         source: "steam-community-xml",
+        mode: isVercelDeployment ? "deployed" : "local",
+        writableReports: !isVercelDeployment,
         steamId,
         games: reportGames.map(normalizeGame),
         summary: buildSummary(reportGames),
@@ -368,6 +380,8 @@ app.post("/api/import", async (req, res) => {
     const reportGames = writeReportFiles(rawGames.map(normalizeReportGame));
     res.json({
       source: "steam-web-api",
+      mode: isVercelDeployment ? "deployed" : "local",
+      writableReports: !isVercelDeployment,
       steamId,
       games: reportGames.map(normalizeGame),
       summary: buildSummary(reportGames),
@@ -378,7 +392,13 @@ app.post("/api/import", async (req, res) => {
 });
 
 app.get("/health", (_req, res) => {
-  res.json({ ok: true, reportDir, hasSteamApiKey: Boolean(process.env.STEAM_API_KEY) });
+  res.json({
+    ok: true,
+    mode: isVercelDeployment ? "deployed" : "local",
+    reportDir,
+    writableReports: !isVercelDeployment,
+    hasSteamApiKey: Boolean(process.env.STEAM_API_KEY),
+  });
 });
 
 if (require.main === module) {

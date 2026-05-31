@@ -1,69 +1,149 @@
 # Steam Wrapped
 
-A local Steam library dashboard. Python fetches and normalizes your Steam owned-games data, then a small Express server previews the dashboard from the generated JSON.
+A Steam library dashboard that turns a public Steam profile into a shareable playtime report.
 
-## Setup
+Paste a Steam profile URL, fetch the public library through the backend, and explore the results as a polished dashboard: top games, lifetime hours, library spread, playtime buckets, recent activity signals, and an exportable JSON bundle.
+
+## What This Can And Cannot Show
+
+Steam's public owned-games API exposes lifetime playtime, recent two-week playtime, and last-played metadata. It does **not** expose exact per-year playtime for arbitrary dates.
+
+That means this app can accurately show:
+
+- lifetime library stats
+- most-played games overall
+- recently played games when Steam exposes that data
+- past annual data if imported from Steam Replay JSON
+- future year-to-date stats after the app has started tracking snapshots
+
+It cannot reconstruct something like "hours played in 2026 so far" for a brand-new user unless Steam Replay or a previous snapshot provides the missing baseline.
+
+## Current App
+
+- Static dashboard UI in `webapp/public`
+- Express API in `webapp/server.js`
+- Vercel adapter in `api/index.js`
+- Sample report JSON in `reports`
+- Browser-local imported report persistence with `localStorage`
+- Optional Python generator in `src/main.py`
+
+The web app works with the included sample data before you connect a Steam account.
+
+## Requirements
+
+- Node.js 18+
+- Python 3.10+ only if you want to use the local Python report generator
+- A Steam Web API key for backend imports when Steam's public Community XML feed is not enough
+
+Get a Steam Web API key from:
+
+```text
+https://steamcommunity.com/dev/apikey
+```
+
+## Environment
+
+Create `.env` in the project root:
+
+```env
+STEAM_API_KEY=your_backend_steam_web_api_key
+
+# Optional: only needed for the Python generator.
+STEAM_ID=your_17_digit_steamid64
+```
+
+Do not expose `STEAM_API_KEY` in the browser. The import form never asks users for a key; the backend uses this value.
+
+## Local Development
+
+Install dependencies:
 
 ```bash
-python -m pip install -r requirements.txt
+npm install
 cd webapp
 npm install
 ```
 
-Create a `.env` file in the project root:
-
-```env
-STEAM_API_KEY=your_steam_web_api_key
-STEAM_ID=your_64_bit_steam_id
-```
-
-Your Steam profile and game details need to be public for the owned-games endpoint to return data.
-
-## Generate Your Wrapped
+Run the dashboard:
 
 ```bash
+npm start
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+You can paste any of these into the import form:
+
+- `https://steamcommunity.com/id/CT4nk3r/`
+- `https://steamcommunity.com/profiles/7656119.../`
+- a raw 17-digit SteamID64
+
+The backend first tries Steam's public Community XML games feed. If that does not return a library, it falls back to the official Steam Web API using `STEAM_API_KEY`.
+
+## Python Report Generator
+
+The Python pipeline is optional. It can generate local report JSON from `STEAM_ID` and `STEAM_API_KEY`:
+
+```bash
+python -m pip install -r requirements.txt
 python src/main.py
 ```
 
-This writes:
+Generated files:
 
 - `reports/games_data.json`
 - `reports/summary.json`
 - `reports/top_games_chart.json`
 - `reports/playtime_distribution.json`
 
-The repository includes sample report data, so the preview app works before you add your own API key.
-
-## Preview
-
-```bash
-cd webapp
-npm start
-```
-
-Open `http://localhost:3000`.
-
-You can also generate and start the preview in one step:
+You can also generate and launch the local preview in one step:
 
 ```bash
 python src/main.py --serve --open
 ```
 
-## Import From A Profile URL
+## JSON Export
 
-The preview app can fetch a public Steam library directly. Paste any of these into the import form:
+From the running app:
 
-- `https://steamcommunity.com/id/CT4nk3r/`
-- `https://steamcommunity.com/profiles/7656119.../`
-- a raw 17-digit SteamID64
+- `Export Bundle`: downloads the current report shown in the browser
+- `/api/export`: downloads the server-side bundled sample/generated report
+- `Health`: `/health`
 
-The server first tries Steam's public Community XML feed. If Steam does not expose the game list there, the server uses `STEAM_API_KEY` from `.env` to call the official Steam Web API. Users should not need to provide their own API key.
+The export bundle contains normalized games, summary data, and chart-ready data.
 
-Steam only returns owned-game data when the target profile and game details are public.
+On local development, importing a profile also rewrites the `reports/*.json` files. On Vercel, the server is stateless, so the import response is saved in the user's browser instead. Reloading the page restores that browser-saved report, and `Reset Sample` clears it.
 
-## Export JSON
+## Deploying To Vercel
 
-Use `Games JSON` for the normalized game list, or `Export Bundle` for one file containing games, summary, and chart data:
+This repo includes a Vercel adapter:
 
-- `http://localhost:3000/reports/games_data.json`
-- `http://localhost:3000/api/export`
+- `api/index.js` exports the Express app as a Vercel Function.
+- `vercel.json` routes all requests through that function.
+- `.vercelignore` keeps local secrets and dependencies out of deployments.
+
+Log in and deploy:
+
+```bash
+npx vercel login
+npx vercel deploy --yes --scope ct4nk3r-projects --project steam-wrapped
+```
+
+Set `STEAM_API_KEY` in Vercel for Preview and Production environments. Without it, imports still try public Community XML first, but private/missing XML library data cannot fall back to the Steam Web API.
+
+The same UI is used locally and on Vercel:
+
+- local mode can read and write `reports/*.json`
+- deployed mode returns imported report data directly and stores it in the browser
+- exports are generated client-side from the current report, so they work in both modes
+
+## Privacy Notes
+
+- Steam profiles must have public game details for imports to work.
+- The backend key belongs on the server only.
+- Vercel deployment mode is stateless: imported data is returned to the browser and saved only in that user's browser storage.
+- Accurate future year-to-date reports require an opt-in snapshot store, which is not implemented yet.
