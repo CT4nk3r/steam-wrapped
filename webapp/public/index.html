@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steam Wrapped</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/">
+          <span class="brand-mark">SW</span>
+          <span>
+            <strong>Steam Wrapped</strong>
+            <small id="snapshotLabel">Loading library</small>
+          </span>
+        </a>
+        <div class="topbar-actions">
+          <a class="ghost-button" href="/reports/games_data.json">Games JSON</a>
+          <a class="ghost-button" href="/api/export">Export Bundle</a>
+          <a class="ghost-button" href="/health">Health</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Library snapshot</p>
+            <h1>Your Steam Wrapped</h1>
+            <p id="heroStory">Loading your games...</p>
+            <div class="hero-stats" id="heroStats"></div>
+          </div>
+          <div class="hero-visual" id="heroVisual" aria-label="Top played game artwork"></div>
+        </section>
+
+        <section class="import-panel">
+          <form id="importForm" class="import-form">
+            <div class="section-heading import-heading">
+              <div>
+                <p class="eyebrow">Steam import</p>
+                <h2>Paste Profile URL</h2>
+              </div>
+              <p id="importStatus" class="import-status">Ready</p>
+            </div>
+
+            <label class="search-field">
+              <span>Profile URL or SteamID64</span>
+              <input
+                id="profileInput"
+                type="text"
+                placeholder="https://steamcommunity.com/id/CT4nk3r/"
+                autocomplete="off"
+              />
+            </label>
+
+            <button id="importButton" class="primary-button" type="submit">Fetch Library</button>
+          </form>
+        </section>
+
+        <section class="metric-grid" id="metricGrid" aria-label="Steam Wrapped totals"></section>
+
+        <section class="insight-layout">
+          <div class="panel top-panel">
+            <div class="section-heading">
+              <p class="eyebrow">Hall of hours</p>
+              <h2>Top Games</h2>
+            </div>
+            <div id="topGamesList" class="top-games-list"></div>
+          </div>
+
+          <div class="panel chart-panel">
+            <div class="section-heading">
+              <p class="eyebrow">Playtime shape</p>
+              <h2>Hours by Game</h2>
+            </div>
+            <div id="topGamesChart" class="bar-chart" aria-label="Top games by playtime"></div>
+          </div>
+
+          <div class="panel chart-panel">
+            <div class="section-heading">
+              <p class="eyebrow">Library spread</p>
+              <h2>Time Buckets</h2>
+            </div>
+            <div id="bucketChart" class="bucket-chart" aria-label="Playtime bucket distribution"></div>
+          </div>
+        </section>
+
+        <section class="story-strip" id="storyStrip" aria-label="Steam Wrapped highlights"></section>
+
+        <section class="library-section">
+          <div class="section-heading library-heading">
+            <div>
+              <p class="eyebrow">Everything owned</p>
+              <h2>Library</h2>
+            </div>
+            <p id="resultCount" class="result-count"></p>
+          </div>
+
+          <div class="controls" aria-label="Library controls">
+            <label class="search-field">
+              <span>Search</span>
+              <input id="searchInput" type="search" placeholder="Game title" autocomplete="off" />
+            </label>
+
+            <label class="control-field">
+              <span>Sort</span>
+              <select id="sortSelect">
+                <option value="playtime">Most played</option>
+                <option value="recent">Recently played</option>
+                <option value="name">Name</option>
+                <option value="unplayed">Unplayed first</option>
+              </select>
+            </label>
+
+            <label class="control-field">
+              <span>Minimum hours</span>
+              <input id="minimumHours" type="range" min="0" max="100" step="1" value="0" />
+              <strong id="minimumHoursValue">0h</strong>
+            </label>
+
+            <div class="segmented" role="group" aria-label="Played filter">
+              <button class="segment active" type="button" data-filter="all">All</button>
+              <button class="segment" type="button" data-filter="played">Played</button>
+              <button class="segment" type="button" data-filter="unplayed">Unplayed</button>
+            </div>
+          </div>
+
+          <div id="libraryGrid" class="library-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="gameCardTemplate">
+      <article class="game-card">
+        <img class="game-art" loading="lazy" alt="" />
+        <div class="game-body">
+          <div>
+            <h3></h3>
+            <p class="game-meta"></p>
+          </div>
+          <div class="game-hours"></div>
+          <div class="bar" aria-hidden="true"><span></span></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

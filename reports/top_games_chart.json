@@ -2,54 +2,43 @@
   "type": "bar",
   "data": {
     "labels": [
-      "Dota 2",
-      "Team Fortress 2",
-      "Dead by Daylight",
-      "Counter-Strike 2",
-      "Counter-Strike",
-      "The Forest",
-      "Tom Clancy's Rainbow Six Siege",
-      "Lethal Company",
-      "Terraria",
-      "Don't Starve Together"
+      "Factorio",
+      "ELDEN RING",
+      "Magic: The Gathering Arena",
+      "The Witcher 3: Wild Hunt",
+      "Cyberpunk 2077",
+      "Captain of Industry",
+      "Dyson Sphere Program",
+      "Disney Dreamlight Valley",
+      "DRAGON QUEST XI S: Echoes of an Elusive Age – Definitive Edition",
+      "The Outer Worlds"
     ],
     "datasets": [
       {
-        "label": "Playtime (Hours)",
+        "label": "Hours",
         "data": [
-          1278.03,
-          684.37,
-          382.02,
-          373.42,
-          203.22,
-          92.47,
-          92.08,
-          87.57,
-          80.28,
-          75.72
+          812.1,
+          545.22,
+          289.37,
+          215.35,
+          189.32,
+          143.2,
+          108.7,
+          102.68,
+          86.97,
+          79.5
         ],
-        "backgroundColor": "#6b8e23",
-        "hoverBackgroundColor": "#8ab92d"
+        "backgroundColor": "#66c0f4",
+        "hoverBackgroundColor": "#a4d65e"
       }
     ]
   },
   "options": {
+    "indexAxis": "y",
     "responsive": true,
     "plugins": {
-      "title": {
-        "display": true,
-        "text": "Top 10 Games by Playtime"
-      },
       "legend": {
         "display": false
-      }
-    },
-    "scales": {
-      "y": {
-        "title": {
-          "display": true,
-          "text": "Playtime (Hours)"
-        }
       }
     }
   }

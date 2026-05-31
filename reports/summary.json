@@ -1,0 +1,16 @@
+{
+  "total_games": 1115,
+  "played_games": 750,
+  "unplayed_games": 365,
+  "total_hours": 6404.23,
+  "top_game": {
+    "Name": "Factorio",
+    "AppID": 427520,
+    "Playtime (minutes)": 48726,
+    "Playtime (hours)": 812.1,
+    "Last Played": null,
+    "Played": true
+  },
+  "recent_year": null,
+  "generated_at": "2026-05-31T17:31:47"
+}
