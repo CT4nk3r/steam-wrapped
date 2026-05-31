@@ -1,0 +1,13 @@
+{
+  "name": "steam-wrapped",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Steam Wrapped dashboard and Vercel deployment adapter",
+  "scripts": {
+    "dev": "npm --prefix webapp start",
+    "start": "npm --prefix webapp start"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  }
+}

@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+node_modules/
+webapp/node_modules/
+__pycache__/
+.pytest_cache/
+reports/steam_report.html

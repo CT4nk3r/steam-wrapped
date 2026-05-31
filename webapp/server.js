@@ -44,6 +44,10 @@ function readJson(fileName, fallback) {
 }
 
 function writeJson(fileName, payload) {
+  if (process.env.VERCEL) {
+    return;
+  }
+
   fs.mkdirSync(reportDir, { recursive: true });
   fs.writeFileSync(path.join(reportDir, fileName), JSON.stringify(payload, null, 2), "utf8");
 }
@@ -341,7 +345,7 @@ app.post("/api/import", async (req, res) => {
         source: "steam-community-xml",
         steamId,
         games: reportGames.map(normalizeGame),
-        summary: readJson("summary.json", null),
+        summary: buildSummary(reportGames),
       });
     }
 
@@ -366,7 +370,7 @@ app.post("/api/import", async (req, res) => {
       source: "steam-web-api",
       steamId,
       games: reportGames.map(normalizeGame),
-      summary: readJson("summary.json", null),
+      summary: buildSummary(reportGames),
     });
   } catch (error) {
     res.status(400).json({ error: error.message || "Could not import that Steam profile." });
@@ -377,6 +381,10 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, reportDir, hasSteamApiKey: Boolean(process.env.STEAM_API_KEY) });
 });
 
-app.listen(port, () => {
-  console.log(`Steam Wrapped preview running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Steam Wrapped preview running at http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
